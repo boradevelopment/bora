@@ -1,12 +1,16 @@
 [submodule "runtime"]
 	path = runtime
 	url = https://github.com/boradevelopment/bora-runtime.git
+	branch = latest
 [submodule "sdk"]
 	path = sdk
 	url = https://github.com/boradevelopment/bora-sdk.git
+	branch = latest
 [submodule "global"]
 	path = global
 	url = https://github.com/boradevelopment/bora-global.git
+	branch = latest
 [submodule "extras/boraWin32COM"]
 	path = extras/boraWin32COM
-	url = https://github.com/boradevelopment/bora-extra-win32com.git
+	url = https://github.com/boradevelopment/bora-extra-win32com.git4
+	branch = latest
