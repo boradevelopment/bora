@@ -1,5 +1,7 @@
 name: Update Submodules
 
+permissions:
+  contents: write
 on:
   repository_dispatch:
     types: [update_submodule]
