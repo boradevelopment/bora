@@ -12,5 +12,5 @@
 	branch = latest
 [submodule "extras/boraWin32COM"]
 	path = extras/boraWin32COM
-	url = https://github.com/boradevelopment/bora-extra-win32com.git4
+	url = https://github.com/boradevelopment/bora-extra-win32com.git
 	branch = latest
