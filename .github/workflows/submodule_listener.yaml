@@ -2,6 +2,7 @@ name: Update Submodules
 
 permissions:
   contents: write
+
 on:
   repository_dispatch:
     types: [update_submodule]
@@ -10,18 +11,18 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout meta repo
+      - name: Checkout meta repo (shallow fetch with submodules)
         uses: actions/checkout@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          submodules: true
-          persist-credentials: true
+          submodules: recursive
+          fetch-depth: 0  # Ensure we can move branches
 
-      - name: Pull submodules
+      - name: Update submodules to latest
         run: |
-          git submodule update --remote
+          git submodule update --remote --merge
           git add .
           git config user.name "GitHub Action"
           git config user.email "action@github.com"
-          git commit -m "Update submodules from ${{ github.event.client_payload.repo }}" || echo "No changes"
+          git diff --cached --quiet || git commit -m "Update submodules from ${{ github.event.client_payload.repo }}"
           git push
