@@ -11,17 +11,22 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout meta repo (shallow fetch with submodules)
+      - name: Checkout meta repo at main
         uses: actions/checkout@v3
         with:
+          ref: latest
           token: ${{ secrets.GITHUB_TOKEN }}
-          submodules: true # No recursive submodules incase of deleted submodules
-          fetch-depth: 0  # Ensure we can move branches
+          submodules: false # Avoid broken recursive update
+          fetch-depth: 0
           persist-credentials: false
 
-      - name: Update submodules to latest
+      - name: Sync and update submodules
         run: |
-          git submodule update --remote --merge
+          git submodule sync
+          git submodule update --init --remote
+
+      - name: Commit submodule changes
+        run: |
           git add .
           git config user.name "GitHub Action"
           git config user.email "action@github.com"
