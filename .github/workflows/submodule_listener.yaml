@@ -15,6 +15,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           submodules: true
+          persist-credentials: false
 
       - name: Pull submodules
         run: |
