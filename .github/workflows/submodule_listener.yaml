@@ -17,6 +17,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           submodules: true # No recursive submodules incase of deleted submodules
           fetch-depth: 0  # Ensure we can move branches
+          persist-credentials: false
 
       - name: Update submodules to latest
         run: |
