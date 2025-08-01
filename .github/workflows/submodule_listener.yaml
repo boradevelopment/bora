@@ -18,7 +18,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           submodules: false # Avoid broken recursive update
           fetch-depth: 0
-          persist-credentials: false
+         # persist-credentials: false
 
       - name: Sync and update submodules
         run: |
