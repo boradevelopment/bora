@@ -10,7 +10,11 @@
 	path = global
 	url = https://github.com/boradevelopment/bora-global.git
 	branch = latest
-[submodule "extras/boraWin32COM"]
-	path = extras/boraWin32COM
-	url = https://github.com/boradevelopment/bora-extra-win32com.git
+[submodule "extras/boraInterpreter"]
+	path = extras/boraInterpreter
+	url = https://github.com/boradevelopment/bora-extra-interpreter.git
+	branch = latest
+[submodule "extras/boraSubProcess"]
+	path = extras/boraSubProcess
+	url = https://github.com/boradevelopment/bora-extra-subprocess.git
 	branch = latest
