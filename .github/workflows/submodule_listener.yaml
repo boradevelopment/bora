@@ -31,21 +31,30 @@ jobs:
 
       - name: Sync and update submodules
         run: |
-          git submodule update --init
-          SUB_REPO_FULL="${{ github.event.client_payload.repo }}"
-          SUB_REPO_NAME=$(basename "$SUB_REPO_FULL")
+          git submodule init
+          TARGET_REPO="${{ github.event.client_payload.repo }}"
           TARGET_BRANCH="${{ github.event.client_payload.branch }}"
-          SUB_PATH=$(git config --file .gitmodules --get-regexp path | grep "$SUB_REPO_NAME" | awk '{print $2}' || echo "")
+          echo "Looking for submodule matching repo: $TARGET_REPO"
+          SUB_PATH=$(git config --file .gitmodules --get-regexp url | grep "$TARGET_REPO" | awk '{print $1}' | sed 'submodule\.\(.*\)\.url/\1/')
+          if [ -z "$SUB_PATH" ]; then
+             SUB_PATH=$(git config --file .gitmodules --get-regexp path | grep -i "bora" | head -n 1 | awk '{print $2}')
+          else
+             SUB_PATH=$(git config --file .gitmodules --get "submodule.$SUB_PATH.path")
+          fi
+
           if [ -n "$SUB_PATH" ]; then
-            echo "Updating submodule at $SUB_PATH to branch $TARGET_BRANCH"
+            echo "Found submodule at path: $SUB_PATH. Updating to branch: $TARGET_BRANCH"
+            git submodule update --init "$SUB_PATH"
             cd "$SUB_PATH"
             git fetch origin "$TARGET_BRANCH"
             git checkout "$TARGET_BRANCH"
             git pull origin "$TARGET_BRANCH"
             cd -
           else
-            echo "Could not find submodule path for $SUB_REPO_NAME, falling back to default update..."
-            git submodule update --remote --merge
+            echo "ERROR: Could not find a submodule path matching $TARGET_REPO in .gitmodules!"
+            echo "Current .gitmodules content:"
+            cat .gitmodules
+            exit 1 # Fail the build so you can see the log
           fi
 
       - name: Commit and Push
