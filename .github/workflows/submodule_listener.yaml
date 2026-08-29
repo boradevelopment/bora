@@ -59,25 +59,22 @@ jobs:
             exit 1
           fi
 
-      - name: Import GPG Key
-        uses: crazy-max/ghaction-import-gpg@v6
-        with:
-          gpg_private_key: ${{ secrets.ACTION_COMMIT_PRIVATEKEY }}
-          passphrase: ${{ secrets.ACTION_COMMIT_PASSPHRASE }}
-          git_config_global: true
-          git_user_signingkey: true
-          git_commit_gpgsign: true
-
       - name: Commit and Push
         run: |
           # NOTE: Make sure this email matches the GPG key email in GitHub settings!
-          git config user.name "GitHub Action"
+          git config user.name "GitHub Actions"
           git config user.email "action@github.com"
           git add .
 
-          if ! git diff --cached --quiet; then
-            git commit -S -m "Update submodules from ${{ github.event.client_payload.repo }} on branch ${{ github.event.client_payload.branch }}"
-            git push -u origin HEAD:"${{ github.event.client_payload.branch }}"
-          else
-            echo "No changes to commit."
-          fi
+#           if ! git diff --cached --quiet; then
+#             git commit -S -m "Update submodules from ${{ github.event.client_payload.repo }} on branch ${{ github.event.client_payload.branch }}"
+#             git push -u origin HEAD:"${{ github.event.client_payload.branch }}"
+#           else
+#             echo "No changes to commit."
+#           fi
+
+
+      - name: Commit
+        uses: IAreKyleW00t/verified-bot-commit@v1
+        with:
+          commit-message: "Update submodules from ${{ github.event.client_payload.repo }} on branch ${{ github.event.client_payload.branch }}"
