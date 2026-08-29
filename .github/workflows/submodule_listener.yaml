@@ -59,12 +59,11 @@ jobs:
             exit 1
           fi
 
-      - name: Commit and Push
-        run: |
-          # NOTE: Make sure this email matches the GPG key email in GitHub settings!
-          git config user.name "GitHub Actions"
-          git config user.email "action@github.com"
-          git add .
+      # - name: Commit and Push
+      #   run: |
+      #     git config user.name "GitHub Actions"
+      #     git config user.email "action@github.com"
+
 
 #           if ! git diff --cached --quiet; then
 #             git commit -S -m "Update submodules from ${{ github.event.client_payload.repo }} on branch ${{ github.event.client_payload.branch }}"
@@ -78,3 +77,7 @@ jobs:
         uses: IAreKyleW00t/verified-bot-commit@v1
         with:
           message: "Update submodules from ${{ github.event.client_payload.repo }} on branch ${{ github.event.client_payload.branch }}"
+
+      - name: Push
+        run: |
+             git push -u origin HEAD:"${{ github.event.client_payload.branch }}"
