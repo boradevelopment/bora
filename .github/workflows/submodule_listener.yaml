@@ -62,6 +62,6 @@ jobs:
       - name: Commit and push
         uses: IAreKyleW00t/verified-bot-commit@v1
         with:
-            github_token: ${{ secrets.BOT_PAT }}
+            token: ${{ secrets.GITHUB_TOKEN }}
             message: "Update submodules from ${{ github.event.client_payload.repo }} on branch ${{ github.event.client_payload.branch }}"
             branch: ${{ github.event.client_payload.branch }}
