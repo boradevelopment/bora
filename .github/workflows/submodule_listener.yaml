@@ -77,4 +77,4 @@ jobs:
       - name: Commit
         uses: IAreKyleW00t/verified-bot-commit@v1
         with:
-          commit-message: "Update submodules from ${{ github.event.client_payload.repo }} on branch ${{ github.event.client_payload.branch }}"
+          message: "Update submodules from ${{ github.event.client_payload.repo }} on branch ${{ github.event.client_payload.branch }}"
